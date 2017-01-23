@@ -57,7 +57,6 @@ public class LeftRightLockTest {
         CountDownLatch latchA = new CountDownLatch(1);
         CountDownLatch latchB = new CountDownLatch(1);
 
-
         Thread threadA = spawnThreadToAcquireLeftLock(latchA, sut);
         Thread threadB = spawnThreadToAcquireLeftLock(latchB, sut);
 
@@ -67,7 +66,6 @@ public class LeftRightLockTest {
             latchA.countDown();
             threadA.join();
             boolean acqStatus = sut.tryLockRight();
-            System.out.println("The right lock was " + (acqStatus ? "" : "not") + " acquired");
             assertFalse("There is still a thread holding the left lock. This shouldn't succeed.", acqStatus);
         } finally {
             latchB.countDown();
